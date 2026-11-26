@@ -295,9 +295,9 @@ const dayTime = di => planStartMs() + di * 86400000;
 const dayOpen = di => di <= todayIdx() || !!(S.plan.open || {})[di];
 const dayStart = di => Math.min(dayTime(di), (S.plan.open || {})[di] || Infinity);
 function noteHref(prefix) {
-  if (typeof prefix === 'string' && prefix.endsWith('.html')) return `${prefix}?v=1795638583`;
+  if (typeof prefix === 'string' && prefix.endsWith('.html')) return `${prefix}?v=1795663172`;
   const ids = [].concat(prefix).map(p => Object.keys(NOTE).find(t => t.startsWith(p))).filter(Boolean).map(k => NOTE[k]);
-  return `note.html?v=1795638583${ids.length ? '&only=' + encodeURIComponent(ids.join(',')) : ''}`;
+  return `note.html?v=1795663172${ids.length ? '&only=' + encodeURIComponent(ids.join(',')) : ''}`;
 }
 /* 錯題／解析「看本章考點」→ note.html?only=<slug>
  * slug＝筆記 h3 的 id：
@@ -308,7 +308,7 @@ function noteChHref(ch) {
   let id = ch;
   const hit = Object.keys(NOTE).find(t => t === ch || t.startsWith(ch));
   if (hit) id = NOTE[hit];
-  return `note.html?v=1795638583&only=${encodeURIComponent(id)}`;
+  return `note.html?v=1795663172&only=${encodeURIComponent(id)}`;
 }
 function todayIdx() {
   ensurePlan();
@@ -514,6 +514,7 @@ function mockTab() {
     const p = paperFromCur(S.cur);
     h += `<div class="card warn"><b>⚠ 有未完成的模擬考：${p.name}</b><br><span class="mut">剩餘 ${fmt(S.cur.end - Date.now())}</span><br>
       <button class="primary" data-act="resume">繼續作答</button><button data-act="abandon">放棄</button></div>`;
+  }
   if (S.day) { S.day = null; if (S.cur && S.cur.day) S.cur = null; save(); }
   const need = SUBS.map(s => `${SHORT[s]}≥70`).join('、');
   h += `<div class="card mut">⏱ 限時・交卷才看答案・${need}。錯題進錯題本。
@@ -1247,7 +1248,7 @@ function syncCard() {
 }
 setInterval(() => { if (document.visibilityState === 'visible') syncNow(true); }, PULL_GAP);
 
-const PAGE_VER = '1795638583';
+const PAGE_VER = '1795663172';
 function checkUpdate() {
   if (document.getElementById('newver')) return;
   fetch('index.html?x=' + Date.now(), {cache: 'no-store'}).then(r => r.text()).then(t => {
